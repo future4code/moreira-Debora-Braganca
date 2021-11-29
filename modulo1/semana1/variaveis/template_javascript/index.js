@@ -33,12 +33,15 @@ console.log(typeof nome, typeof idade)
 console.log("Olá", nome, ", você tem", idade, "anos.")
 
 2.
+const perguntaBlusa = "Você está de blusa listrada?"
+const perguntaOculos = "Você usa óculos?"
+const perguntaCabelo = "Você está de cabelo solto?"
 
 const roupa = true
 const cabelo = false
 const oculos = true
 
-console.log("Você está de bluza listrada?", roupa, "Você usa óculos?", oculos, "Você está de cabelo solto?", cabelo)
+console.log(perguntaBlusa, roupa, perguntaOculos, oculos, perguntaCabelo, cabelo)
 
 3.
 
