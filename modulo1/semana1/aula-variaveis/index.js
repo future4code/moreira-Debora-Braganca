@@ -51,3 +51,17 @@ const idadeUsuarioNumero = Number (idadeUsuario)
 
 const idadeUsuarioNumero = */
 
+
+
+
+
+
+
+//DESAFIO VARIAVEIS
+
+let usuario1 = Number(prompt ("Digite aqui seu número"))
+let usuario2 = Number(prompt ("Digite aqui mais um número"))
+
+
+console.log("O primeiro número somado ao segundo número resulta em:", usuario1+usuario2)
+console.log("O primeiro número multiplicado pelo segunto número resulta em:", usuario1*usuario2)
