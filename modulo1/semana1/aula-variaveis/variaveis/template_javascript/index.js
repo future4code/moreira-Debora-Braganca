@@ -26,19 +26,22 @@ let nome = prompt("Olá, qual seu nome?")
 let idade = prompt ("Qual sua idade?")
 
 console.log(nome, idade)
-console.log(typeof nome, typeof idade)
+console.log(typeof nome, typeof idade) 
 
 //Os tipos impressos foram string, pois é o tipo que retorna quando o usuário preenche um formulário.
 
 console.log("Olá", nome, ", você tem", idade, "anos.")
 
 2.
+const perguntaRoupa = "Você está de blusa listrada?"
+const perguntaCabelo = "Você está de cabelo solto?"
+const perguntaOculos = "Você usa óculos?"
 
 const roupa = true
 const cabelo = false
 const oculos = true
 
-console.log("Você está de bluza listrada?", roupa, "Você usa óculos?", oculos, "Você está de cabelo solto?", cabelo)
+console.log(perguntaRoupa, roupa, perguntaOculos, oculos, perguntaCabelo, cabelo)
 
 3.
 
