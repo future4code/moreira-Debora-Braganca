@@ -30,6 +30,7 @@
 //EXERCÍCIOS DE ESCRITA DE CÓDIGO
 
 //1.
+
 const idadeUsuario = Number(prompt("Olá, qual a sua idade?"))
 const idadeMelhorAmigo = Number(prompt("Qual a idade do(a) seu(sua) melhor amigo(a)?"))
 
@@ -37,6 +38,7 @@ console.log("Sua idade é maior do que a do(a) seu(sua) melhor amigo(a)?", idade
 console.log("A diferença de idade entre vocês é:", idadeUsuario - idadeMelhorAmigo)
 
 //2.
+
 //a)
 const numeroPar = Number(prompt("Digite um número par:"))
 
