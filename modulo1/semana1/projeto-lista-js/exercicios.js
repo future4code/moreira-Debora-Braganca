@@ -109,29 +109,33 @@ function checaIgualdadeDesconsiderandoCase(string1, string2) {
 
 // EXERCÍCIO 13
 function checaRenovacaoRG() {
-  // implemente sua lógica aqui
-    /* const qualAnoAtual = Number(prompt(`Digite o ano atual`))
+  
+    // implemente sua lógica aqui
+    const qualAnoAtual = Number(prompt(`Digite o ano atual`))
     const qualAnoNascimento = Number(prompt(`Digite a data de nascimento`))
     const anoEmissao = Number(prompt(`Digite o ano de emissão`))
-    const idadeMenor20 = 20 >= (qualAnoAtual - qualAnoNascimento)
-    const idadeEntre20e50 = 50 >(qualAnoAtual - qualAnoNascimento) > 20
-    const idadeMaior50 = (qualAnoAtual - qualAnoNascimento) > 50
-    const renova5 = 10 > (qualAnoAtual - anoEmissao) >= 5
-    const renova10 = 20 > (qualAnoAtual - anoEmissao) >= 10
-    const renova20 = (qualAnoAtual - anoEmissao) >= 20
+    const idade = qualAnoAtual - qualAnoNascimento
+    const tempoEmissao = qualAnoAtual - anoEmissao
+    const renova5 = idade <= 20 && tempoEmissao >= 5
+    const renova10 = 50 >= idade > 20 && tempoEmissao >= 10
+    const renova15 = idade > 50 && tempoEmissao >= 15
+    console.log(renova5 || renova10 || renova15)
     
-
-    return ((idadeMenor20 && renova5) || (idadeEntre20e50 && renova10) || (idadeMaior50 && renova20)) */
 }
 
 // EXERCÍCIO 14
 function checaAnoBissexto(ano) {
   // implemente sua lógica aqui
-
+  const multiploDe400 = ano % 400 === 0
+  const multiploDe4menos100 = (ano % 4 === 0) ==! (ano % 100 === 0)
+  return multiploDe400 || multiploDe4menos100
 }
 
 // EXERCÍCIO 15
 function checaValidadeInscricaoLabenu() {
   // implemente sua lógica aqui
-
+  const maiorDeIdade = prompt(`Você tem mais de 18 anos?`) === "sim"
+  const ensinoMedio = prompt(`Você possui Ensino Médio completo?`) === "sim"
+  const disponibilidade = prompt(`Você possui disponibilidade exclusiva durante os horários do curso?`) === "sim"
+  console.log(maiorDeIdade && ensinoMedio && disponibilidade)
 }
