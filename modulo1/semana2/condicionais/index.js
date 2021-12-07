@@ -27,7 +27,7 @@
 
 //Exercícios de escrita de código
 //a)
-const idade = prompt("Qual a sua idade?")
+/* const idade = prompt("Qual a sua idade?")
 //b)
 const idadeNumero = Number(idade)
 //c)
@@ -101,65 +101,117 @@ function topaAssistir (genero, preco) {
         console.log("Escolha outro filme :(")
     }
 }
-topaAssistir(genero, preco)
+topaAssistir(genero, preco) */
 
 //2.
 const nome = prompt("Qual seu nome completo?")
 const tipoDeJogo = prompt("Qual o tipo de jogo? Digite IN para internacional e DO para doméstico.")
 const etapaDoJogo = prompt("Qual a etapa do jogo? Digite SF para semi-final, DT para decisão do terceiro lugar e FI para final.")
 const categoria = Number(prompt("Digite a categoria: 1, 2, 3 ou 4"))
-const quantidadeDeIngressos = prompt("Qual a quantidade de ingressos?")
+const quantidadeDeIngressos = Number(prompt("Qual a quantidade de ingressos?"))
 
-function valorDoIngresso (){
-    if (tipoDeJogo === "DO"){
-        function valorDoIngressoNacional(etapaDoJogo, categoria){
-        if (etapaDoJogo === "SF"){
+
+function valorDoIngresso (tipoDeJogo, etapaDoJogo, categoria){
+    if (tipoDeJogo === "DO" && etapaDoJogo === "SF"){
             switch (categoria) {
             case 1:
-            return 1320,00
+            return 1320.00
             break
             case 2: 
-            return 880,00
+            return 880.00
             case 3:
-            return 550,00
+            return 550.00
             break
             case 4:
-            return 220,00
+            return 220.00
             break
+            default: "Favor digite a categoria de 1 a 4."
+                break
         }
-    } else if (etapaDoJogo === "DT") {
+    } else if (tipoDeJogo === "DO" && etapaDoJogo === "DT") {
         switch (categoria) {
             case 1:
-            return 660,00
+            return 660.00
             break
             case 2: 
-            return 440,00
+            return 440.00
             case 3:
-            return 330,00
+            return 330.00
             break
             case 4:
-            return 170,00
+            return 170.00
             break
+            default: "Favor digite a categoria de 1 a 4."
+                break
         }
-    } else if (etapaDoJogo === "FI") {
+    } else if (tipoDeJogo === "DO" && etapaDoJogo === "FI") {
         switch (categoria) {
             case 1:
-            return 1980,00
+            return 1980.00
             break
             case 2: 
-            return 1320,00
+            return 1320.00
             case 3:
-            return 880,00
+            return 880.00
             break
             case 4:
-            return 330,00
+            return 330.00
             break
+            default: "Favor digite a categoria de 1 a 4."
+                break
         }
+    } else if (tipoDeJogo === "IN" && etapaDoJogo === "SF"){
+        switch (categoria) {
+        case 1:
+        return 1320.00 * 4.10
+        break
+        case 2: 
+        return 880.00 * 4.10
+        case 3:
+        return 550.00 * 4.10
+        break
+        case 4:
+        return 220.00 * 4.10
+        break
+        default: "Favor digite a categoria de 1 a 4."
+            break
     }
-  } 
-} else if (tipoDeJogo === "IN") {
-        return valorDoIngressoNacional(tipoDeJogo, etapaDoJogo, categoria) * 4,10
-  }
+} else if (tipoDeJogo === "IN" && etapaDoJogo === "DT"){
+    switch (categoria) {
+    case 1:
+    return 660.00 * 4.10
+    break
+    case 2: 
+    return 440.00 * 4.10
+    case 3:
+    return 330.00 * 4.10
+    break
+    case 4:
+    return 170.00 * 4.10
+    break
+    default: "Favor digite a categoria de 1 a 4."
+        break
+}
+} else if (tipoDeJogo === "IN" && etapaDoJogo === "DT"){
+    switch (categoria) {
+    case 1:
+    return 1980.00 * 4.10
+    break
+    case 2: 
+    return 1320.00 * 4.10
+    case 3:
+    return 880.00 * 4.10
+    break
+    case 4:
+    return 330.00 * 4.10
+    break
+    default: "Favor digite a categoria de 1 a 4."
+        break
+}
+}
+ else {
+     console.log("Favor digite IN ou DO para o tipo de jogo.")
+ }
 }
 
 
@@ -178,7 +230,7 @@ function nomeEtapaJogo(etapaDoJogo) {
             return "Final"}
 }
         
-const valorTotal = valorDoIngresso() * quantidadeDeIngressos
+const valorTotal = valorDoIngresso(tipoDeJogo, etapaDoJogo, categoria) * quantidadeDeIngressos
 
 console.log(`---Dados da compra---
 Nome do cliente: ${nome}
@@ -187,5 +239,5 @@ Etapa do jogo:`, nomeEtapaJogo(etapaDoJogo),`
 Categoria:`, categoria,`
 Quantidade de Ingressos:`, quantidadeDeIngressos, `ingressos`,`
 ---Valores---
-Valor do Ingresso: R$`,valorDoIngresso(),`
-Valor Total: ${valorTotal}`)
+Valor do Ingresso: R$`,valorDoIngresso(tipoDeJogo, etapaDoJogo, categoria),`
+Valor Total: R$${valorTotal}`)
