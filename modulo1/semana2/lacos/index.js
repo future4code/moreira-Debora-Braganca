@@ -120,4 +120,89 @@ function retornaMaiorNumero(array){
     }
     return menorNumero
   }
-  console.log(`O maior número é ${retornaMaiorNumero(arrayOriginal)} menor número é ${retornaMenorNumero(arrayOriginal)}.`)
+  console.log(`O maior número é ${retornaMaiorNumero(arrayOriginal)} e o menor número é ${retornaMenorNumero(arrayOriginal)}.`)
+
+  //Desafios
+  //1.
+  //a)
+  numeroPrimeiroJogador = Number(prompt("Digite um número"))
+  console.log("Vamos jogar!")
+  
+  //b)
+  let tentativaSegundoJogador = Number(prompt("Digite o número que você acha que o primeiro jogador pensou."))
+  
+  let quantidadeDeTentativas = []
+
+
+    while (tentativaSegundoJogador !== numeroPrimeiroJogador){
+    if(numeroPrimeiroJogador > tentativaSegundoJogador){
+    
+    console.log(`o número chutado foi: ${tentativaSegundoJogador}`)
+    console.log(`Errrrrrrrou, o número escolhido é maior`)
+
+    quantidadeDeTentativas.push(tentativaSegundoJogador)
+    }
+    
+    if(numeroPrimeiroJogador < tentativaSegundoJogador){
+      
+      console.log(`o número chutado foi: ${tentativaSegundoJogador}`)
+      console.log(`Errrrrrrrou, o número escolhido é menor`)
+      
+      quantidadeDeTentativas.push(tentativaSegundoJogador)
+    }
+    tentativaSegundoJogador = Number(prompt("Digite o número que você acha que o primeiro jogador pensou."))
+
+}
+//c)
+    if(tentativaSegundoJogador === numeroPrimeiroJogador){
+
+      console.log("Acertou!!!")
+}
+
+    
+    console.log(`O número de tentativas foi: ${quantidadeDeTentativas.length + 1} `)
+
+
+
+//2.
+
+let numeroAleatorio = Math.floor((Math.random() * 100) + 1)
+console.log("Vamos jogar!")
+
+
+let tentativasDoJogador = Number(prompt("Digite o número que você acha que o computador selecionou."))
+
+let numeroDeTentativas = []
+
+  while (tentativasDoJogador !== numeroAleatorio){
+  
+  if(numeroAleatorio > tentativasDoJogador){
+  
+  console.log(`o número chutado foi: ${tentativasDoJogador}`)
+  console.log(`Errrrrrrrou, o número escolhido é maior`)
+
+  numeroDeTentativas.push(tentativasDoJogador)
+
+  }
+  
+  if(numeroAleatorio < tentativasDoJogador){
+    
+    console.log(`o número chutado foi: ${tentativasDoJogador}`)
+    console.log(`Errrrrrrrou, o número escolhido é menor`)
+
+    numeroDeTentativas.push(tentativasDoJogador)
+
+  }
+  
+  tentativasDoJogador = Number(prompt("Digite o número que você acha que o computador selecionou"))
+  
+}
+  if(numeroAleatorio === tentativasDoJogador){
+
+    console.log("Acertou!!!")
+}
+
+  
+  console.log(`O número de tentativas foi: ${numeroDeTentativas.length + 1} `)
+
+  
