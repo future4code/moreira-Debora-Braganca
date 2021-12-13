@@ -81,8 +81,7 @@ A carta revelada do computador é ${carta3.texto}.`)
          }
          
          else if (pontuacaoJogador > 21){
-            
-            console.log(`As cartas do computador são: ${carta3.texto} ${carta4.texto}`)
+         
             console.log("O computador ganhou!")
          
          } else if (pontuacaoJogador === pontuacaoComputador){
