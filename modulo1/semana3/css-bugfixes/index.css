@@ -73,9 +73,15 @@ div img {
     color: white;
     padding: 36px;
 }
+#container-de-descricao>p{
+    display: block;
+    width: 180px;
+    margin: auto;
+}
 
 #container-de-descricao>ol {
     padding: 15px 0px;
+    
 }
 
 #container-para-comprar {
