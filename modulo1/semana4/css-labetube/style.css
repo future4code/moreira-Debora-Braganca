@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+    display: grid;
+    grid-template-rows: 60px 1fr 60px;
+    height: 100vh;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: rgb(228, 102, 56);
+    align-items: center;
+    height: 60px;
+    grid-column: 1/-1;
+}
+
+header a{
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+button{
+    padding: 10px 20px;
+}
+
+.galeria-de-videos{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+    row-gap: 10px;
+    column-gap: 10px;
+    margin: 10px;
+}
+
+.bloco-de-video{
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+}
+
+.galeria-de-videos video{
+    width: 100%;
+}
+
+.galeria-de-videos h3{
+    margin: 5px 5px;
+}
+
+.galeria-de-videos a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px 5px;
+}
+
+footer{
+    display: flex;
+    color: white;
+    background-color: rgb(30, 41, 41);
+    padding: 0 20px;
+    height: 60px;
+    align-items: center;
+    grid-column: 1/-1;
+}
+
+.video-detalhe{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+h2{
+  padding: 50px 50px;
+  align-self: flex-start;
+}
+
+.video-grande{
+    max-width: 120vh;
+}
