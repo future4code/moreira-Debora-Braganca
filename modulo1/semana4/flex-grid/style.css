@@ -1,21 +1,25 @@
 *{
   margin: 0;
-  padding: 0;  
+  padding: 0; 
+  box-sizing: border-box; 
 }
 
-.tudo{
+body{
+    min-height: 100vh;
     display: grid;
-    justify-items: stretch;
-    height: 100vh;
+    grid-template-rows: 60px 1fr 60px;
+    grid-template-columns: 300px 1fr;
 }
+
 
 header{
     height: 60px;
-    padding: 0 18px;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center; 
     background-color: mediumvioletred;
+    grid-column: 1/-1;
 }
 
 header img{
@@ -33,17 +37,13 @@ header h1{
     font-size: 24px;
 }
 
-.tudo main{
-    display: flex;
-
-}
 
 #menu{
-    width: 600px;
     background-color: #f2d0e0;
     display: flex;
     flex-direction: column;
-    
+    padding: 10px;
+    width: 300px;
 }
 
 #menu div{
@@ -62,17 +62,6 @@ header h1{
     width: 8%;
 }
 
-
-footer{
-    background-color: mediumvioletred;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    bottom: 0;
-    width: 100vw;
-    align-self: flex-end;
-}
 
 .bolos{
     display: grid;
@@ -103,3 +92,12 @@ footer{
     font-size: 18px;
 }
 
+footer{
+    background-color: mediumvioletred;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    grid-column: 1/-1;
+}
