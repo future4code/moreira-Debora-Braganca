@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import DetalheUsuario from "./DetalheUsuario";
 
 
 const urlUsers = "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users";

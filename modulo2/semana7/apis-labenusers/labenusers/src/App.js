@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import styled from 'styled-components';
 import CriaUsuario from './components/CriaUsuario';
-import ListaDeUsuarios from './components/ListaDeUsuários';
+import ListaDeUsuarios from './components/ListaDeUsuarios';
 
 const ContainerApp = styled.div`
   display: flex;
