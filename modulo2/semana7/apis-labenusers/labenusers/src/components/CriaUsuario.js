@@ -43,11 +43,12 @@ export default class CriaUsuario extends React.Component {
       axios
         .post(urlUsers, body, headers)
         .then((res) => {
+          alert("Usuário criado com sucesso")
           this.setState({ usuarioInputNome: "", usuarioInputEmail:"" });
           this.getAllUsers();
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          alert(`${err.response.data.message}`)
           this.setState({ usuarioInputNome: "", usuarioInputEmail:"" });
         });
     };

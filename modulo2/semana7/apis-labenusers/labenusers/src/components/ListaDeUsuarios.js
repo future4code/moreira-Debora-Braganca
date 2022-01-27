@@ -1,25 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
+import DetalheUsuario from "./DetalheUsuario";
 
-const ListaDeUsuarios = styled.div`
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-`
-
-const ItemLista = styled.li `
-    
-    margin-top: 15px
-
-`
-
-const Botao = styled.button `
-    margin-top: 15px
-`
 
 const urlUsers = "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users";
 
@@ -29,12 +12,27 @@ const headers = {
   }
 };
 
-const urlDeleteUser = "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/:id";
+const ContainerListaDeUsuarios = styled.div ` 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
-export default class App extends React.Component {
+const ItemLista = styled.li `
+    margin-top: 10px;
+`;
+
+const Botao = styled.button `
+    margin-top: 10px;
+    margin-left: 8px;
+`;
+
+export default class ListaDeUsuarios extends React.Component {
 
     state = {
       usuarios: [],
+      usuario: {}
     }
   
     componentDidMount() {
@@ -46,7 +44,6 @@ export default class App extends React.Component {
         .get(urlUsers, headers)
         .then((res) => {
           this.setState({ usuarios: res.data });
-          console.log(res.data);
         })
         .catch((err) => {
           alert("Algo deu errado, tente novamente");
@@ -54,8 +51,8 @@ export default class App extends React.Component {
     };
 
     deleteUser = (id) => {
-
-        axios.delete(urlDeleteUser, id, headers)
+      if (window.confirm("Tem certeza que deseja deletar?")){
+        axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`, headers)
         .then((res) => {
             alert('Usuário deletado com sucesso.');
           this.getAllUsers();
@@ -63,20 +60,28 @@ export default class App extends React.Component {
         .catch((err) => {
           alert(err.response.data.message);
       });
-    };
+    } else {
+      alert("O usuário não foi deletado.")
+    }
+  }
+
 
     render(){
 
         const users = this.state.usuarios.map((user) => {
-          return <ItemLista key={user.id}>{user.name} <button  onClick={() => {this.deleteUser(user.id)}}>Deletar</button></ItemLista>;
+          return (<ItemLista key={user.id}>
+          {user.name}
+          <Botao  onClick={() => {this.deleteUser(user.id)}}>Deletar</Botao>
+          </ItemLista>)
         });
     
         return (
         
-        <ListaDeUsuarios>
+        <ContainerListaDeUsuarios>
             {users}
         <Botao onClick={this.props.botaoCriarUsuario}>Voltar</Botao>
-        </ListaDeUsuarios>
+
+        </ContainerListaDeUsuarios>
     
         )
     }
