@@ -82,6 +82,7 @@ class Post extends React.Component {
 
   onClickSalvo = () => {
     this.setState({
+      rend-condicional-form
       salvo: !this.state.salvo 
     })
   }
