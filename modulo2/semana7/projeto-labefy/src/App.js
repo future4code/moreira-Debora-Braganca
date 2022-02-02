@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ListaDePlaylists from "./components/ListaDePlaylists";
+import CriarPlaylist from "./components/CriarPlaylist";
 
 const urlPlaylists =
   "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists";
@@ -14,32 +15,16 @@ const headers = {
 
 const ContainerApp = styled.div `
 background-color: black;
-padding: 36px;
-height: 100vh;
-
-h1{
-  color: white;
-}
-li{
-  color: white;
-  margin-top: 8px;
-}
-h3{
-  color: white;
-  margin-top: 54px;
-}
-`
-
-const BotaoCriarPlaylist = styled.button `
-  margin-left: 8px ;
+min-height: 100vh;
 `
 
 export default class App extends React.Component {
   state = {
-    playlistInput: ""
+    playlistInput: "",
+    visualizaLista: false,
   };
 
-  createPlaylsit = () => {
+  createPlaylist = () => {
     const body = {
       name: this.state.playlistInput
     };
@@ -49,6 +34,7 @@ export default class App extends React.Component {
       .then((res) => {
         alert(`A playlist ${this.state.playlistInput} foi criada com sucesso!`);
         this.setState({ playlistInput: "" });
+        this.setState({visualizaLista: false})
       })
       .catch((err) => {
         alert("Algo deu errado. Tente novamente.");
@@ -60,19 +46,31 @@ export default class App extends React.Component {
     this.setState({ playlistInput: event.target.value });
   };
 
+  visualizarLista = () => {
+    this.setState({visualizaLista: true})
+  }
+
+  hideLista = () => {
+    this.setState({visualizaLista: false})
+  }
+
   render() {
+
+    const renderizaTelaCorreta = () => {
+      if (this.state.visualizaLista) {
+        return <ListaDePlaylists botaoHide={this.hideLista} botaoDetalhe = {this.visualizarDetalhe}/>;
+      } else {
+        return <CriarPlaylist createPlaylist = {this.createPlaylist}
+        playlistInput = {this.state.playlistInput}
+        onPlaylistTextChange = {this.onPlaylistTextChange}
+        visualizarLista = {this.visualizarLista}
+        />
+      }
+    }
 
     return (
       <ContainerApp>
-        <h1>Labefy</h1>
-        <input
-          value={this.state.playlistInput}
-          onChange={this.onPlaylistTextChange}
-          placeholder="Playlist"
-        />
-        <BotaoCriarPlaylist onClick={this.createPlaylsit}>Enviar</BotaoCriarPlaylist>
-        <h3>Suas playlists:</h3>
-        <ListaDePlaylists />
+        {renderizaTelaCorreta()} 
       </ContainerApp>
     );
   }
