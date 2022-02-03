@@ -19,16 +19,22 @@ const ContainerListaDePlaylists = styled.div `
   align-items: center;
   justify-content: center;
 
-h1{
-  color: white;
-}
 li{
   color: white;
   margin-top: 8px;
+  font-size: 24px;
 }
 h3{
   color: white;
   margin-top: 48px;
+  font-size: 30px;
+}
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+  li{
+  font-size: 20px;
+  list-style: none;
+}
 }
 `;
 
@@ -39,10 +45,16 @@ const ItemLista = styled.li `
 const Botao = styled.button `
     margin-top: 10px;
     margin-left: 8px;
+    font-size: 18px;
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    font-size: 16px;
+}
 `;
 
 const BotaoHide = styled.button `
-margin-top: 20px;
+margin-top: 48px;
+font-size: 18px;
 `
 const Header = styled.div `
   display: flex;
@@ -56,6 +68,16 @@ const Header = styled.div `
     color: white;
     margin-right: 24px;
   }
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  height: 40px;
+
+  h1{
+    margin-left: 30px;
+    margin-right: 8px;
+    font-size: 30px;
+  }
+}
 `
 
 export default class ListaDePlaylists extends React.Component {

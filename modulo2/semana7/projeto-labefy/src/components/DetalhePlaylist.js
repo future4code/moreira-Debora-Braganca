@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
 
 
 // const urlPlaylistTracks = `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`;
@@ -16,6 +15,12 @@ const Container = styled.div `
   grid-template-columns: repeat(4, 1fr);
   row-gap: 18px;
   column-gap: 24px;
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+  display: flex;
+  flex-direction: column;
+}
 `
 
 const Titulo = styled.p `
@@ -67,6 +72,7 @@ const TituloMusicas = styled.p `
   grid-column: 1 / -1;
   color: white;
   margin-top: 36px;
+  font-size: 18px;
 `
 
 

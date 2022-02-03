@@ -27,17 +27,33 @@ const Header = styled.div `
     color: white;
     margin-right: 24px;
   }
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  height: 40px;
+
+  h1{
+    margin-left: 30px;
+    margin-right: 8px;
+    font-size: 30px;
+  }
+}
 `
 
 const BotaoCriarPlaylist = styled.button `
   margin-left: 8px ;
-  padding: 6px;
+  padding: 0 6px;
+  font-size: 18px;
+  height: 32px;
 `
 
 const BotaoVisualizar = styled.button `
   margin-top: 54px;
   padding: 8px;
   margin-left: 54px;
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    margin: 0 18px;
+  }
 `
 
 const ContainerCriar = styled.div `
@@ -46,12 +62,21 @@ const ContainerCriar = styled.div `
 
   h3 {
     color: white;
+    font-size: 24px;
   }
 
   input{
     height: 25px;
-    width: fit-content;
+    width: 300px;
   }
+
+  @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    margin: 72px 18px;
+  }
+`
+const ContainerInput = styled.div `
+  display: flex;
+  align-items: center;
 `
 
 export default class CriarPlaylist extends React.Component {
@@ -66,12 +91,14 @@ export default class CriarPlaylist extends React.Component {
         </Header>
         <ContainerCriar>
           <h3>Criar Nova Playlist:</h3>
+          <ContainerInput>
           <input
           value={this.props.playlistInput}
           onChange={this.props.onPlaylistTextChange}
-          placeholder="Playlist"
+          placeholder="Nome da Playlist"
           />
-          <BotaoCriarPlaylist onClick={this.props.createPlaylist}>Enviar</BotaoCriarPlaylist>
+          <BotaoCriarPlaylist onClick={this.props.createPlaylist}>Criar</BotaoCriarPlaylist>
+          </ContainerInput>
         </ContainerCriar> 
         <BotaoVisualizar onClick={this.props.visualizarLista}>Visualizar Playlists</BotaoVisualizar>
         
