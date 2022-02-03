@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { DetalhePlaylist } from "./DetalhePlaylist";
+import { BsSoundwave } from "react-icons/bs";
 
 
 const urlPlaylists = "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists";
@@ -42,6 +43,19 @@ const Botao = styled.button `
 
 const BotaoHide = styled.button `
 margin-top: 20px;
+`
+const Header = styled.div `
+  display: flex;
+  align-items: center;
+  padding: 18px 0;
+  background-color: #6a90af;
+  width: 100vw;
+
+  h1{
+    margin-left: 54px;
+    color: white;
+    margin-right: 24px;
+  }
 `
 
 export default class ListaDePlaylists extends React.Component {
@@ -187,6 +201,10 @@ export default class ListaDePlaylists extends React.Component {
         return (
         
         <ContainerListaDePlaylists>
+        <Header>
+        <h1>Labefy</h1>
+        <BsSoundwave color="white" size={60}/>
+        </Header>
           <h3>Suas playlists:</h3>
             {playlists}
             <BotaoHide onClick={this.props.botaoHide}>Esconder Lista</BotaoHide>
