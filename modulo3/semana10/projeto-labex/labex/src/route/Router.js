@@ -5,7 +5,8 @@ import ApplicationFormPage from "../pages/ApplicationFormPage"
 import ListTripPage from "../pages/ListTripPage"
 import LoginPage from "../pages/LoginPage"
 import TripDetailsPage from "../pages/TripDetailsPage"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes , useParams} from "react-router-dom"
+
 
 export const Router = () => {
     return(

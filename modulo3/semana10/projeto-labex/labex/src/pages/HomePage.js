@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom"
 
@@ -24,15 +24,20 @@ const HomePage = () => {
         navigate("/trips/list")
     }
 
-    const goToLoginArea = () => {
-        navigate("/login")
+    const goToAdminArea = () => {
+        const token = window.localStorage.getItem('token')
+        if(token === null){
+            navigate('/login')
+        } else {
+            navigate('/admin/trips/list')
+        }
     }
 
     return (
         <ContainerHomePage>
             <h1>Olá! Bem Vindo(a)!!</h1>
             <ContainerBotoes>
-            <button onClick={goToLoginArea}>Login Admin</button>
+            <button onClick={goToAdminArea}>Área Admin</button>
             <button onClick={goToTripList}>Ver Viagens</button>
             </ContainerBotoes>
         </ContainerHomePage>
