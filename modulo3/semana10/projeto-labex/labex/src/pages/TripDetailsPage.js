@@ -1,69 +1,95 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 
 const TripDetailsPage = () => {
 
-    const [tripDetails, setTripDetails] = useState(undefined)
+    const [tripDetails, setTripDetails] = useState({})
+    const [candidates, setCandidates] = useState([])
+    const [approved, setApproved] = useState([])
 
+    const navigate = useNavigate()
 
     const params = useParams().id
-    console.log(params)
 
     const token = localStorage.getItem('token')
-    console.log(token)
- 
-    const getTripDetails = () => {
 
-        axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trip/${params}`, {
-            headers: {
-               auth: token
-            }})
-        .then((response) => {
-            console.log(response.data)
-            setTripDetails(response.data)
+    const headers = {headers: {
+        auth: token
+     }}
+
+
+    useEffect(() => {
+        axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trip/${params}`, headers)
+        .then((res) => {
+            setTripDetails(res.data.trip)
+            setCandidates(res.data.trip.candidates)
+            setApproved(res.data.trip.approved)
         })
         .catch((error) => {
             console.log(error.response)
         })
-    }
-
-    useEffect(() => {
-        getTripDetails()
     }, [])
 
+    const onClickVoltar = () => {
+        navigate('/admin/trips/list')
+    }
 
-    console.log(tripDetails)
+    const onClickAprovar = (candidateId) => {
+        const bodyDecide = {
+            approve: true
+        }
+        axios.put(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${params}/candidates/${candidateId}/decide`, bodyDecide, headers)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
 
-    const candidatosPendentes = tripDetails.trip.candidates.map((candidato) => {
-        return <div>
-            <p>Nome: {candidato.name}</p>
-            <p>Profissão: {candidato.profession}</p>
-            <p>Idade: {candidato.age}</p>
-            <p>País: {candidato.country}</p>
-            <p>Texto de aplicação: {candidato.applicationText}</p>
+    const onClickReprovar = (candidateId) => {
+        const bodyDecide = {
+            approve: false
+        }
+        axios.put(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${params}/candidates/${candidateId}/decide`, bodyDecide, headers)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+
+    const candidatosPendentes = candidates && candidates.map((candidato) => {
+        return <div key={candidato.id}>
+            <li>Nome: {candidato.name}</li>
+            <li>Profissão: {candidato.profession}</li>
+            <li>Idade: {candidato.age}</li>
+            <li>País: {candidato.country}</li>
+            <li>Texto de aplicação: {candidato.applicationText}</li>
+            <button onClick={onClickAprovar}>Aprovar</button>
+            <button onClick={onClickReprovar}>Reprovar</button>
         </div>
     })
 
-    const candidatosAprovados = tripDetails.trip.approved.map((candidato) => {
-        if (tripDetails.trip.approved > 0) {
-            return <li>{candidato.name}</li>
-        } else {
-            return <p>Nenhum candidato aprovado.</p>
-        }
+    const candidatosAprovados = approved.map((candidato) => {
+        return <li key={candidato.id}>{candidato.name}</li>    
     })
 
     return (
         <div>
             Detalhes da Viagem!
-            <h2>{tripDetails.trip.name}</h2>
-            <p>Planeta: {tripDetails.trip.planet}</p>
-            <p>Descrição: {tripDetails.trip.description}</p>
+            <h2>{tripDetails.name}</h2>
+            <p>Planeta: {tripDetails.planet}</p>
+            <p>Descrição: {tripDetails.description}</p>
             <h3>Candidatos Pendentes:</h3>
-            <div>{candidatosPendentes}</div>
+            {candidatosPendentes}
             <h3>Candidatos Aprovados:</h3>
-            {candidatosAprovados}
+            {approved.length > 0 ? candidatosAprovados : <p>Nenhum candidato aprovado.</p>}
+            <button onClick={onClickVoltar}>Voltar</button>
 
         </div>
     )

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useRequestData from "../hooks/useRequestData";
 import { BASE_URL } from "../constants/url";
+import axios from "axios";
 
 const ContainerFormulário = styled.div `
     display: flex;
@@ -22,9 +23,8 @@ const ContainerFormulário = styled.div `
 const ApplicationFormPage = () => {
 
     const [viagem, setViagem] = useState("")
-    const [viagemId, setViagemId] = useState("")
     const [nome, setNome] = useState("")
-    const [idade, setIdade] = useState(undefined)
+    const [idade, setIdade] = useState(0)
     const [texto, setTexto] = useState("")
     const [profissao, setProfissao] = useState("")
     const [pais, setPais] = useState("")
@@ -41,21 +41,9 @@ const ApplicationFormPage = () => {
         navigate("/trips/list")
     }
 
-    const body = {
-        name: nome,
-        age: idade,
-        applicationText: texto,
-        profession: profissao,
-        country: pais,
-    }
-    
-
     const onChangeViagem = (e) => {
         setViagem(e.target.value)
     }
-
-    console.log(viagem)
-    console.log(viagemId)
 
     const onChangeNome = (e) => {
         setNome(e.target.value)
@@ -77,22 +65,51 @@ const ApplicationFormPage = () => {
         setPais(e.target.value)
     }
 
+    const viagemSelecionada = trips.find((trip) => {return trip.name === viagem})
+    console.log(viagemSelecionada)
+    const tripId = viagemSelecionada.id
+
+    console.log(tripId)
+
+    const body = {
+        name: nome,
+        age: idade,
+        applicationText: texto,
+        profession: profissao,
+        country: pais,
+    }
+
+    const inscrever = (e) => {
+
+        e.preventDefault()
+
+        axios.post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${tripId}/apply`, body)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err.response)
+        })
+    }
+
     return (
         <ContainerFormulário>
             <h3>Inscreva-se para uma viagem</h3>
+            <form onSubmit={inscrever}>
             <select placeholder="Escolha uma viagem" value={viagem} onChange={onChangeViagem}>
                 <option disabled>Escolha uma viagem</option>
                 {listaDeViagens}
             </select>
             <input placeholder="Nome" value={nome} onChange={onChangeNome}/>
-            <input placeholder="Idade" value={idade} onChange={onChangeIdade}/>
+            <input placeholder="Idade" type="number" value={idade} onChange={onChangeIdade}/>
             <input placeholder="Texto de candidatura" value={texto} onChange={onChangeTexto}/>
             <input placeholder="Profissão" value={profissao} onChange={onChangeProfissao}/>
             <input placeholder="País" value={pais} onChange={onChangePais}></input>
-            <div>
+            
             <button>Enviar</button>
+            </form>
             <button onClick={goToTripList}>Voltar</button>
-            </div>
+            
         </ContainerFormulário>
     )
 }

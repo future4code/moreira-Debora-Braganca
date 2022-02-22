@@ -37,15 +37,26 @@ const AdminHomePage = () => {
         navigate("/")
     }
 
+    const goToCreate = () => {
+        navigate("/admin/trips/create")
+    }
+
     const goToDetails = (id) => {
         navigate(`/admin/trips/${id}`)
     }
 
+    const token = localStorage.getItem('token')
+    const headers = {headers: {
+        auth: token
+     }}
+
     const deleteTrip = (id) => {
         if (window.confirm("Tem certeza que deseja deletar?")){
-        axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${id}`)
+        axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${id}`, headers)
         .then((response) => {
             console.log(response.data)
+            alert('Viagem deletada com sucesso.')
+            navigate(0)
         })
         .catch((error) => {
             console.log(error.response)
@@ -76,6 +87,7 @@ const AdminHomePage = () => {
 
         <div>
             <button onClick={goToHome}>Voltar</button>
+            <button onClick={goToCreate}>Adicionar Viagem</button>
         </div>
     </ContainerListPage>
 }
