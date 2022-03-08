@@ -13,7 +13,7 @@ const ContainerFormulário = styled.div `
     margin: 72px auto;
     align-items: center;
     border: 1px solid black;
-    padding: 16px;
+    padding: 16px; 
 
     h3{
         margin: 0;
@@ -22,14 +22,11 @@ const ContainerFormulário = styled.div `
 `
 const ApplicationFormPage = () => {
 
-    const [viagem, setViagem] = useState("")
-    const [nome, setNome] = useState("")
-    const [idade, setIdade] = useState(0)
-    const [texto, setTexto] = useState("")
-    const [profissao, setProfissao] = useState("")
-    const [pais, setPais] = useState("")
-
     const [trips] = useRequestData(`${BASE_URL}`)
+
+    const [viagem, setViagem] = useState("Surfando em Netuno")
+    const [viagemId, setViagemId] = useState("")
+    const [form, setForm] = useState({name:"", age: 18, applicationText: "", profession: "", country: ""})
 
     const listaDeViagens = trips && trips.map((trip) => {
         return <option key={trip.id}>{trip.name}</option>})
@@ -45,66 +42,79 @@ const ApplicationFormPage = () => {
         setViagem(e.target.value)
     }
 
-    const onChangeNome = (e) => {
-        setNome(e.target.value)
-    }
+    const viagemSelecionada = trips && trips.find((trip) => {
+     return trip.name === viagem
+    })
 
-    const onChangeIdade = (e) => {
-        setIdade(e.target.value)
-    }
-
-    const onChangeTexto = (e) => {
-        setTexto(e.target.value)
-    }
-
-    const onChangeProfissao = (e) => {
-        setProfissao(e.target.value)
-    }
-
-    const onChangePais = (e) => {
-        setPais(e.target.value)
-    }
-
-    const viagemSelecionada = trips.find((trip) => {return trip.name === viagem})
     console.log(viagemSelecionada)
-    const tripId = viagemSelecionada.id
 
-    console.log(tripId)
 
-    const body = {
-        name: nome,
-        age: idade,
-        applicationText: texto,
-        profession: profissao,
-        country: pais,
+
+    const onChange = (e) => {
+        const {name, value} = e.target
+        setForm({...form, [name]: value})
     }
 
-    const inscrever = (e) => {
 
-        e.preventDefault()
+    const body = form
 
-        axios.post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${tripId}/apply`, body)
+    const inscrever = (event) => {
+
+        event.preventDefault()
+
+        axios.post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/deborah-luna-moreira/trips/${viagemSelecionada}/apply`, body)
         .then((res) => {
             console.log(res.data)
         })
         .catch((err) => {
             console.log(err.response)
         })
+
+        setForm({name:"", age: 18, applicationText: "", profession: "", country: ""})
     }
 
     return (
         <ContainerFormulário>
             <h3>Inscreva-se para uma viagem</h3>
             <form onSubmit={inscrever}>
-            <select placeholder="Escolha uma viagem" value={viagem} onChange={onChangeViagem}>
+            <select placeholder="Escolha uma viagem" 
+            value={viagem} 
+            onChange={onChangeViagem} 
+            required>
                 <option disabled>Escolha uma viagem</option>
                 {listaDeViagens}
             </select>
-            <input placeholder="Nome" value={nome} onChange={onChangeNome}/>
-            <input placeholder="Idade" type="number" value={idade} onChange={onChangeIdade}/>
-            <input placeholder="Texto de candidatura" value={texto} onChange={onChangeTexto}/>
-            <input placeholder="Profissão" value={profissao} onChange={onChangeProfissao}/>
-            <input placeholder="País" value={pais} onChange={onChangePais}></input>
+            <input
+            name="name"
+            placeholder="Nome" 
+            value={form.name} 
+            onChange={onChange} 
+            required/>
+            <input
+            name="age"
+            placeholder="Idade" 
+            type="number" min={18} 
+            value={form.age} 
+            onChange={onChange} 
+            required/>
+            <input 
+            name="applicationText"
+            placeholder="Texto de candidatura" 
+            value={form.applicationText} 
+            onChange={onChange} 
+            required/>
+            <input 
+            name="profession"
+            placeholder="Profissão" 
+            value={form.profession} 
+            onChange={onChange} 
+            required/>
+            <input 
+            name="country"
+            placeholder="País" 
+            value={form.country} 
+            onChange={onChange} 
+            required/>
             
             <button>Enviar</button>
             </form>

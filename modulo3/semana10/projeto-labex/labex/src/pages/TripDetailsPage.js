@@ -70,8 +70,8 @@ const TripDetailsPage = () => {
             <li>Idade: {candidato.age}</li>
             <li>País: {candidato.country}</li>
             <li>Texto de aplicação: {candidato.applicationText}</li>
-            <button onClick={onClickAprovar}>Aprovar</button>
-            <button onClick={onClickReprovar}>Reprovar</button>
+            <button onClick={() => {onClickAprovar(candidato.id)}}>Aprovar</button>
+            <button onClick={() => {onClickReprovar(candidato.id)}}>Reprovar</button>
         </div>
     })
 
