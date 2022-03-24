@@ -63,3 +63,39 @@ function checaRenovacaoRG(anoAtual: number, anoNascimento: number, anoEmissao: n
            return "error"
        }
    }
+
+//Exercício 6
+
+function comparaNumeros(num1: number, num2: number):void {
+  console.log(`Soma: ${num1 + num2}`)
+  console.log(`Subtração: ${num1 - num2}`)
+  console.log(`Multiplicação: ${num1 * num2}`)
+  if(num1 > num2){
+    console.log(`O maior número é ${num1}`)
+  } else if (num2 > num1) {
+    console.log(`O maior número é ${num2}`)
+  }
+}
+
+//Exercício 7
+
+function retornaRna (dna: string):string {
+  const dna2:string = dna.replace("A", "U")
+  const dna3 = dna2.replace("T", "A")
+  const dna4 = dna3.replace("C", "D")
+  const dna5 = dna4.replace("G", "J")
+  const dna6 = dna5.replace("D", "G")
+  const dna7 = dna6.replace("J", "C")
+
+  return dna7
+}
+
+//Exercício 8
+
+function retornaReverso(palavra: string):string{
+  const novaPalavra:string = palavra.split("").reverse().join("");
+  return novaPalavra
+}
+
+//Exercício 9
+
