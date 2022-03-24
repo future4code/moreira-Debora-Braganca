@@ -12,8 +12,8 @@ function checaTriangulo(a: number, b: number, c: number) :string{
 
 // Exercício 2
 
-function imprimeTresCoresFavoritas(cor1: string, cor2: string, cor3: string) {
-    const arrayDeCores = []
+function imprimeTresCoresFavoritas(cor1: string, cor2: string, cor3: string):string[] {
+    const arrayDeCores: string[] = []
 
     arrayDeCores.push(cor1,cor2,cor3) 
     
