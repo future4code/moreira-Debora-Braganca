@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import { AddressInfo } from "net";
 import { toDos } from "./data";
+import { appendFile } from "fs";
+import * as fs from 'fs';
 
 const app = express();
 
@@ -39,7 +41,7 @@ type toDo = {
 app.get("/toDos", (req,res) => {
     const afazeres = toDos
     const concluidos = afazeres.filter((toDo) => {
-        if(toDo.completed === true){
+        if(toDo.completed === false){
             return toDo
         }
     })
@@ -59,28 +61,92 @@ app.post("/toDos", (req, res) => {
         completed: terminada
     }
 
-    const newToDos = [...toDos, newToDo]
-    res.status(200).send(newToDos)
+    const allToDos = toDos
+    const newToDos = allToDos.push(newToDo)
+
+    fs.writeFile('./src/data.txt', JSON.stringify(allToDos), (err) => {
+        if (err) throw err;
+        console.log('The "data to append" was appended to file!');
+      });
+
+    fs.readFile('./src/data.txt','utf8', (err, data) => {
+        if (err) throw err;
+        console.log(data)
+        res.send(data)
+        })
+    // res.status(200).send(newToDos)
 })
 
 //Exercício 06
-app.put("/toDos/:userId/toDo", (req, res) => {
+app.put("/toDos/:toDoId", (req, res) => {
     //input
-    const userId = req.params.userId
-    
+    const toDoId = Number(req.params.toDoId)
 
-//tratamento de dados
-//     for(let i = 0; i < users.length; i++){
-//         if(users[i].id === usuario){
-//             for(let j = 0; j < users[i].playlists.length; j++){
-//                 if(users[i].playlists[j].id === playlistId){
-//                     users[i].playlists[j].tracks.push(novaMusica)
-//                 }
-//             }
-//         }
-//     }
-
-
-// res.send(users)
-
+    const tarefaFiltrada = toDos.filter(toDo => {
+        if(toDo.id === toDoId){
+            // const newToDo = {
+            //     ...toDo,
+            //     completed: !toDo.completed
+            // }
+            return {
+                ...toDo,
+                completed: !toDo.completed
+            }
+    }
 })
+
+    res.status(200).send(tarefaFiltrada[0])
+})
+
+//Exercício 07
+app.delete("/toDos/:toDoId", (req,res) => {
+    const toDoId = Number(req.params.toDoId)
+
+    const toDosUpdated = toDos.filter((toDo) => {
+        if(toDoId !== toDo.id){
+            return toDo
+        } else{
+
+        }
+    })
+    res.send(toDosUpdated)
+})
+
+//Exercício 08
+type toDosArray = {
+    selectedUser: any[],
+    others: any[]
+}
+
+app.get("/toDos/:userId", (req, res) => {
+    const usuario = Number(req.params.userId)
+    const afazeres = toDos
+
+    const tarefasUsuario = afazeres.filter((toDo) => {
+        if(toDo.userId === usuario){
+            return toDo
+        }
+    })
+
+    const demaisTarefas = afazeres.filter((toDo) => {
+        if(toDo.userId !== usuario){
+            return toDo
+        }
+    })
+    
+    const todos = {
+        selectedUser: tarefasUsuario,
+        others: demaisTarefas
+    }
+
+    res.status(200).send(todos)
+})
+
+//Exercício 09
+//Documentação do Postman
+
+//Exercício 10
+//alteração no exercício 08
+
+//Exercício 11
+
