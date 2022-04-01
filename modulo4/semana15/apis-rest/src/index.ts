@@ -107,3 +107,85 @@ app.post("/users", (req, res) => {
 //a)Nada mudou.
 //b)Não considero, pois é um método para alterar informacões,
 //apesar de ter funcionado fica melhor organizado e para o entendimento utilizar o POST.
+
+//Exercício 05
+app.put("/users/:userId", (req,res) => {
+    let errorCode: number = 400
+    try{
+        const userId = Number(req.params.userId)
+        const user = users.find((user) => {
+            if(user.id === userId){
+                return user
+            }
+        })
+        const {id, name, email, type, age} = req.body
+    
+        const newUser: user = {
+            id,
+            name,
+            email,
+            type,
+            age
+        }
+
+        const index = users.findIndex((user) => user.id === userId)
+        users[index] = newUser
+
+        res.status(201).send("Usuário alterado")
+        console.log(newUser)
+        console.log(users)
+
+    } catch(error: any){
+        res.status(errorCode).send({ message: error.message})
+    }
+
+})
+
+//Exercício 06
+app.patch("users/:userId", (req,res) => {
+    let errorCode: number = 400
+    try{
+        const userId = Number(req.params.userId)
+        const user = users.find((user) => {
+            if(user.id === userId){
+                return user
+            }
+        })
+        const name = req.body.name
+    
+        const newUser: any = {
+            ...user,
+            name: name,
+            ...user
+        }
+        
+        const index = users.findIndex((user) => user.id === userId)
+        users[index] = newUser
+
+        res.status(201).send("Usuário alterado novamente")
+        console.log(newUser)
+        console.log(users)
+
+    } catch(error: any){
+        res.status(errorCode).send({ message: error.message})
+    }
+
+})
+
+//Exercício 07
+app.delete("users/:id", (req,res) => {
+    let errorCode: number = 400
+    try{
+        const id = Number(req.params.id)
+        
+        const index = users.findIndex((user) => user.id === id)
+        const newUsers = users.splice(index, 1)
+
+        res.status(200).send("Usuário deletado")
+        console.log(newUsers)
+
+    } catch(error: any){
+        res.status(errorCode).send({ message: error.message})
+    }
+
+})
