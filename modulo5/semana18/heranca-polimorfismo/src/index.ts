@@ -40,7 +40,7 @@ class User {
       "abcd", "blablabla@email.com", "Usuário", "abdc@1234"
   )
 
-  console.log(usuario.getId(), usuario.getName(), usuario.getEmail())
+//console.log(usuario.getId(), usuario.getName(), usuario.getEmail())
 
   //Exercício 01
   //a)Não seria possível.
@@ -75,7 +75,7 @@ class User {
       "abcd", "blablabla@email.com", "Hugo", "abdc@1234", "1234-5678-9101-1121"
       )
 
-console.log(customer.getId(), customer.getName(), customer.getEmail(), customer.getCreditCard(), customer.purchaseTotal)
+//console.log(customer.getId(), customer.getName(), customer.getEmail(), customer.getCreditCard(), customer.purchaseTotal)
 
 //Exercício 03
 //a)Não, pois é uma propriedade privada e não há um método para acessá-la.
@@ -88,4 +88,23 @@ console.log(customer.introduceYourself())
 
 //Polimorfismo
 
-//Exercício 01
+export interface Client {
+    name: string;
+    registrationNumber: number;
+    consumedEnergy: number;
+    calculateBill(): number;
+}
+
+const client: Client = {
+    name: "Marcela",
+    registrationNumber: 5,
+    consumedEnergy: 600,
+  
+    calculateBill: () => {
+      return 2;
+    }
+  }
+
+  //Exercício 01
+  console.log(client.name, client.registrationNumber, client.consumedEnergy, client.calculateBill())
+  //a)Consegui imprimir todas as propriedades.
