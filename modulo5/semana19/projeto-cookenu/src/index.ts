@@ -4,6 +4,7 @@ import { AddressInfo } from "net";
 import { getUserInfo } from "./endpoints/getUserInfo";
 import { login } from "./endpoints/login";
 import { signup } from "./endpoints/signup";
+import { getProfile } from "./endpoints/getProfile"
 
 const app = express();
 
@@ -19,6 +20,7 @@ const server = app.listen(process.env.PORT || 3003, () => {
 });;
 
 
-app.get("/users", getUserInfo)
+app.get("/users/profile", getUserInfo)
+app.get("/users/:id", getProfile)
 app.post("/users", signup)
 app.post("/users/login", login)

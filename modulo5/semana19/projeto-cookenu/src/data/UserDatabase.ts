@@ -32,10 +32,11 @@ export class UserDatabase extends BaseDatabase {
         }
     }
 
-    public async getUserInfo(): Promise<User[]> {
+    public async getUserInfo(tokenData:string): Promise<User[]> {
         try {
             const users = await BaseDatabase.connection("Cookenu_Users")
             .select("id","name", "email")
+            .where({id: tokenData})
             return users.map((user => User.toUserModel(user)))
             
         } catch (error: any) {
