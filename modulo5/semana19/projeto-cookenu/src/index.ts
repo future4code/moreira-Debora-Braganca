@@ -5,6 +5,8 @@ import { getUserInfo } from "./endpoints/getUserInfo";
 import { login } from "./endpoints/login";
 import { signup } from "./endpoints/signup";
 import { getProfile } from "./endpoints/getProfile"
+import { createRecipe } from "./endpoints/createRecipe";
+import { getRecipe } from "./endpoints/getRecipe";
 
 const app = express();
 
@@ -24,3 +26,5 @@ app.get("/users/profile", getUserInfo)
 app.get("/users/:id", getProfile)
 app.post("/users", signup)
 app.post("/users/login", login)
+app.get("/recipe/:id", getRecipe)
+app.post("/recipe", createRecipe)
