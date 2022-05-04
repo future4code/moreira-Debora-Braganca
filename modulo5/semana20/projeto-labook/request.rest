@@ -34,3 +34,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkNGJhZTE4LTNiNTkt
 GET http://localhost:3003/posts
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkNGJhZTE4LTNiNTktNDgwNC05OThiLTZhMmI5Y2M4MjFkZCIsImlhdCI6MTY1MTY5NjU3MCwiZXhwIjoxNjUxNjk4MDEwfQ.CNSrl200QEuGjXwNbXctFESw55J66x-jVM3hen2qDLA
+
+###
+
+GET Http://localhost:3003/posts/90181613-2fe9-44a2-bead-9ea9e7cf5d71
+Content-Type: application/json

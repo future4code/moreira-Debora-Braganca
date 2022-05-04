@@ -24,4 +24,11 @@ export default class UserBusiness {
     
     return id
   }
+
+  getPostById = async (id: string) => {
+
+    const post = await this.postData.findPostByid(id)
+    
+    return post
+  }
 }

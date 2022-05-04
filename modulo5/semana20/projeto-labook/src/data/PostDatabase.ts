@@ -1,5 +1,6 @@
 import { BaseDatabase } from "./BaseDatabase";
 import Post from "../model/Post";
+import { FindPostByIdRes } from "../types/findPostByIdRes";
 
 
 export default class PostDatabase extends BaseDatabase {
@@ -16,15 +17,15 @@ export default class PostDatabase extends BaseDatabase {
         }
     }
 
-    // findPostByid = async(email: string) => {
-    //     try {
-    //         const queryResult: FindByEmailResponse = await this
-    //         .connection(this.TABLE_NAME)
-    //         .select("*")
-    //         .where({email: email})
-    //         return queryResult[0]
-    //     } catch (error) {
-    //         throw new Error("Erro ao buscar usuário no banco.")
-    //     }
-    // }
+    findPostByid = async(id: string) => {
+        try {
+            const queryResult: FindPostByIdRes = await this
+            .connection(this.TABLE_NAME)
+            .select("*")
+            .where({id})
+            return queryResult[0]
+        } catch (error) {
+            throw new Error("Erro ao buscar post no banco.")
+        }
+    }
 }
