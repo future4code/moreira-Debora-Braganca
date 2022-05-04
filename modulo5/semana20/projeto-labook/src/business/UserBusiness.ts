@@ -3,6 +3,7 @@ import User from "../model/User";
 import Authenticator from "../services/Authenticator";
 import HashManager from "../services/HashManager";
 import IdGenerator from "../services/IdGenerator";
+import { LoginDTO } from "../types/loginDTO";
 import { SignUpInputDTO } from "../types/signUpInputDTO";
 
 
@@ -32,6 +33,26 @@ export default class UserBusiness {
     await this.userData.insert(newUser)
     
     const token = this.authenticator.generateToken({id})
+    return token
+  }
+
+  login = async (input: LoginDTO) => {
+    const {email, password} = input
+            
+      if(!email || !password){
+        throw new Error("Favor informar email e senha")
+    }
+
+    const registeredUser = await this.userData.findByEmail(email)
+    if(!registeredUser){
+      throw new Error("Este email não está cadastrado.")
+  }
+    const passwordIsCorrect = await this.hashManager.compare(password, registeredUser.password)
+    if(!passwordIsCorrect){
+      throw new Error("Email ou senha incorretos")
+    }
+
+    const token = this.authenticator.generateToken({id: registeredUser.id})
     return token
   }
 }
