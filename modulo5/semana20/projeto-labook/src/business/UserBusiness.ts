@@ -5,6 +5,7 @@ import HashManager from "../services/HashManager";
 import IdGenerator from "../services/IdGenerator";
 import { LoginDTO } from "../types/loginDTO";
 import { SignUpInputDTO } from "../types/signUpInputDTO";
+import UserToFollow from "../model/UserToFollow";
 
 
 export default class UserBusiness {
@@ -54,5 +55,26 @@ export default class UserBusiness {
 
     const token = this.authenticator.generateToken({id: registeredUser.id})
     return token
+  }
+
+  follow = async (userToFollowId: string, token: string) => {
+    const followId = userToFollowId
+    if(!followId){
+      throw new Error("Favor informar um id de usuário para seguir")
+  }
+
+  const registeredUser = await this.userData.findById(followId)
+    if(!registeredUser){
+      throw new Error("Usuário não encontrado")
+  }
+  
+  const id = this.idGenerator.generateId()
+  const tokenData = this.authenticator.getTokenData(token)
+  const idUser = tokenData.id
+
+  const newUserToFollow = new UserToFollow(id, idUser, followId)
+  await this.userData.insertFollower(newUserToFollow)
+  
+  return newUserToFollow
   }
 }

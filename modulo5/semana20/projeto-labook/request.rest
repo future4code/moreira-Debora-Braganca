@@ -2,9 +2,9 @@ POST http://localhost:3003/users/signup
 Content-Type: application/json
 
 {
-    "name":"Flabio",
-    "email":"Flabio@lab.com",
-    "password":"flabio123"
+    "name":"Hugo",
+    "email":"hugo@lab.com",
+    "password":"hugo123"
 }
 
 ###
@@ -39,3 +39,13 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkNGJhZTE4LTNiNTkt
 
 GET Http://localhost:3003/posts/90181613-2fe9-44a2-bead-9ea9e7cf5d71
 Content-Type: application/json
+
+###
+
+POST http://localhost:3003/users/follow
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNmMzhkMTkxLWJhYzAtNGUyYi05NzYwLWM5ZjFiYmJhNzc0ZSIsImlhdCI6MTY1MTcxODU3MiwiZXhwIjoxNjUxNzIwMDEyfQ.BmtYSGdtRw_gaZ-oBCmp8CIqraHQwzBRaN2199FOkVk
+
+{
+    "userToFollowId": "fd4bae18-3b59-4804-998b-6a2b9cc821dd"
+}

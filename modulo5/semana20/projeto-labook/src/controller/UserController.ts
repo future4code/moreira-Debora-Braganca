@@ -43,4 +43,19 @@ export default class UserController {
         }
     }
 
+    follow = async (req:Request, res:Response) => {
+        const token = req.headers.authorization as string
+        const userToFollowId = req.body.userToFollowId
+
+        try {
+            const follow = await this.userBusiness.follow(userToFollowId, token)
+            res.status(200).send({message: "Followed successfully", follow})
+        } catch (error) {
+            if(error instanceof Error){
+                return res.status(400).send(error.message)
+            }
+            res.status(500).send("Erro ao seguir usuário")
+        }
+    }
+
 }
