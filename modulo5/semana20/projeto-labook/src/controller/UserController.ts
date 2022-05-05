@@ -49,12 +49,27 @@ export default class UserController {
 
         try {
             const follow = await this.userBusiness.follow(userToFollowId, token)
-            res.status(200).send({message: "Followed successfully", follow})
+            res.status(200).send({message: "Amigo adicionado.", follow})
         } catch (error) {
             if(error instanceof Error){
                 return res.status(400).send(error.message)
             }
             res.status(500).send("Erro ao seguir usuário")
+        }
+    }
+
+    unfollow = async (req:Request, res:Response) => {
+        const token = req.headers.authorization as string
+        const userToUnfollowId = req.body.userToUnfollowId
+
+        try {
+            const unFollow = await this.userBusiness.unFollow(userToUnfollowId)
+            res.status(200).send({message: "Amizade desfeita."})
+        } catch (error) {
+            if(error instanceof Error){
+                return res.status(400).send(error.message)
+            }
+            res.status(500).send("Erro ao deixar de seguir usuário")
         }
     }
 

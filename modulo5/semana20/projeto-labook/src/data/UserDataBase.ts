@@ -52,4 +52,15 @@ export default class UserDatabase extends BaseDatabase {
             throw new Error("Erro do banco.")
         }
     }
+
+    deleteFollower = async(userToUnfollowId: string) => {
+        try {
+            await this
+            .connection(this.TABLE_FOLLOW)
+            .delete()
+            .where({userToFollowId: userToUnfollowId})
+        } catch (error) {
+            throw new Error("Erro do banco.")
+        }
+    }
 }

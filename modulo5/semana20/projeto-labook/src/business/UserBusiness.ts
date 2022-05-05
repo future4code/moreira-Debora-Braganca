@@ -77,4 +77,18 @@ export default class UserBusiness {
   
   return newUserToFollow
   }
+
+  unFollow = async (userToUnfollowId: string) => {
+    const unfollowId = userToUnfollowId
+    if(!unfollowId){
+      throw new Error("Favor informar um id de usuário para deixar de seguir")
+  }
+
+  const registeredUser = await this.userData.findById(unfollowId)
+    if(!registeredUser){
+      throw new Error("Usuário não encontrado entre os amigos")
+  }
+
+  await this.userData.deleteFollower(unfollowId)
+  }
 }
