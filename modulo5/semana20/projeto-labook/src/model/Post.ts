@@ -1,6 +1,6 @@
 export enum POST_ROLES{
     NORMAL="NORMAL",
-    EVENTO="EVENTO"
+    EVENTO="EVENT"
 }
 
 
@@ -9,8 +9,9 @@ export default class Post {
         private id:string,
         private photo:string,
         private description:string,
-        private createdAt:Date,
-        private role: POST_ROLES
+        private created_at:Date,
+        private role: POST_ROLES,
+        private author_id: string
     ){}
 }
 

@@ -2,9 +2,20 @@ POST http://localhost:3003/users/signup
 Content-Type: application/json
 
 {
-    "name":"Hugo",
-    "email":"hugo@lab.com",
-    "password":"hugo123"
+    "name":"Olivia",
+    "email":"pimpa@lab.com",
+    "password":"pimpa123"
+}
+
+###
+
+POST http://localhost:3003/users/signup
+Content-Type: application/json
+
+{
+    "name":"Manu",
+    "email":"manu@lab.com",
+    "password":"manu123"
 }
 
 ###
@@ -19,21 +30,31 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3003/posts
+POST http://localhost:3003/users/login
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkNGJhZTE4LTNiNTktNDgwNC05OThiLTZhMmI5Y2M4MjFkZCIsImlhdCI6MTY1MTY5NjU3MCwiZXhwIjoxNjUxNjk4MDEwfQ.CNSrl200QEuGjXwNbXctFESw55J66x-jVM3hen2qDLA
 
 {
-    "photo": "https://picsum.photos/id/237/200/300",
-    "description": "Doguinho",
+    "email":"hugo@lab.com",
+    "password":"hugo123"
+}
+
+###
+
+POST http://localhost:3003/posts
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNmMzhkMTkxLWJhYzAtNGUyYi05NzYwLWM5ZjFiYmJhNzc0ZSIsImlhdCI6MTY1MTc2NDIzOSwiZXhwIjoxNjUxNzY1Njc5fQ.mWjcysLwVjoBMTqVc1PALnNmrDY09LfBplNAU4RzemE
+
+{
+    "photo": "https://picsum.photos/200/300",
+    "description": "Qualquer",
     "role": "NORMAL"
 }
 
 ###
 
-GET http://localhost:3003/posts
+GET http://localhost:3003/posts/feed
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkNGJhZTE4LTNiNTktNDgwNC05OThiLTZhMmI5Y2M4MjFkZCIsImlhdCI6MTY1MTY5NjU3MCwiZXhwIjoxNjUxNjk4MDEwfQ.CNSrl200QEuGjXwNbXctFESw55J66x-jVM3hen2qDLA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNmMzhkMTkxLWJhYzAtNGUyYi05NzYwLWM5ZjFiYmJhNzc0ZSIsImlhdCI6MTY1MTg0NTkyNywiZXhwIjoxNjUxODQ3MzY3fQ.-0p_Ru_mdlZQSYN65MWmopL7lWtTBzBWPY2mPNV3oFM
 
 ###
 
@@ -44,10 +65,10 @@ Content-Type: application/json
 
 POST http://localhost:3003/users/follow
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNmMzhkMTkxLWJhYzAtNGUyYi05NzYwLWM5ZjFiYmJhNzc0ZSIsImlhdCI6MTY1MTcxODU3MiwiZXhwIjoxNjUxNzIwMDEyfQ.BmtYSGdtRw_gaZ-oBCmp8CIqraHQwzBRaN2199FOkVk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNmMzhkMTkxLWJhYzAtNGUyYi05NzYwLWM5ZjFiYmJhNzc0ZSIsImlhdCI6MTY1MTg0NDM3OSwiZXhwIjoxNjUxODQ1ODE5fQ.3PwGboLhp_e_c4_Zs75ebKnfZ9FrihCXqG-7FRRCf9E
 
 {
-    "userToFollowId": "fd4bae18-3b59-4804-998b-6a2b9cc821dd"
+    "userToFollowId": "63670133-149a-49f3-9471-c684da340db2"
 }
 
 ###
