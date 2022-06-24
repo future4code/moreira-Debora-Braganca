@@ -165,16 +165,17 @@ export default class ProductsBusiness {
         throw new CustomError(422, "Favor informar uma tag.")
       }
   
-      const products = await this.productsDatabase.getProductsByTag(tag)
+      const productsIds = await this.productsDatabase.getProductsIdsByTag(tag)
 
-      if(!products){
+      if(!productsIds){
         throw new CustomError(422, "Não foram encontrados produtos com essa tag.")
       }
 
       const fullProducts = []
 
-      for(let product of products){
-        const productTags = await this.productsDatabase.getProductTags(product.id)
+      for(let productId of productsIds){
+        const product = await this.productsDatabase.getProductById(productId.product_id);
+        const productTags = await this.productsDatabase.getProductTags(productId.product_id)
 
         const tags = []
   
@@ -184,8 +185,7 @@ export default class ProductsBusiness {
         }
   
         const fullProduct = {
-          id: product.id,
-          name: product.name,
+          ...product,
           tags: tags
         }
   

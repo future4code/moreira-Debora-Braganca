@@ -53,7 +53,7 @@ export default class ProductsController {
     };
 
     public getProductsByTag = async (req:Request, res:Response) => {
-        const tag = req.query.tag as string
+        const tag = req.params.tag as string
         try {
             const products = await this.productBusiness.getProductsByTag(tag)
 

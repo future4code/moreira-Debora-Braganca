@@ -16,4 +16,5 @@ const productsController = new ProductsController(productsBusiness)
 
 productRouter.get("/:id", productsController.getProductById)
 productRouter.get("", productsController.getProductsByName)
+productRouter.get("/get/:tag", productsController.getProductsByTag)
 productRouter.post("/create", productsController.createProduct)

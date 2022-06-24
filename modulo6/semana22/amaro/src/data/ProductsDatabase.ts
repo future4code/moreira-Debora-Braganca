@@ -102,15 +102,21 @@ export default class ProductsDatabase extends BaseDatabase {
         }
     };
 
-    getProductsByTag = async(tag: string) => {
+    getProductsIdsByTag = async(tag: string) => {
         try {
-            const queryResult = await this
+            const [tagId] = await this
             .connection(this.TABLE_TAG)
             .select("*")
             .where({name: tag})
-            return queryResult[0]
+
+            const result = await this
+            .connection(this.TABLE_TAGS)
+            .select("*")
+            .where({tag_id: tagId.id})
+
+            return result
         } catch (error) {
             throw new Error("Erro ao buscar produto no banco.")
         }
     };
-}
+};
