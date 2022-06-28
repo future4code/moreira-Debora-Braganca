@@ -5,6 +5,7 @@ import { DogWalkingInputDTO } from "../types/DTO/DogWalkingInputDTO";
 import Pet from "../model/Pet";
 import PetsPasseios from "../model/PetsPasseios";
 import { CustomError } from "../error/CustomError";
+import moment from "moment";
 
 
 export default class DogWalkingBusiness {
@@ -59,8 +60,6 @@ export default class DogWalkingBusiness {
             hora_inicio,
             hora_fim
           )
-
-          console.log(newWalk)
       
           await this.dogWalkingDatabase.insert(newWalk)
     }
@@ -68,45 +67,45 @@ export default class DogWalkingBusiness {
 
     for(let pet of input.pets){
 
-    const petId = this.idGenerator.generateId()
+    const verifyPet = await this.dogWalkingDatabase.getPetId(pet, input.tutor)
 
-    const newPet = new Pet (
-        petId,
-        pet,
-        input.tutor
+    if(!verifyPet){
+        const petId = this.idGenerator.generateId()
+
+        const newPet = new Pet (
+            petId,
+            pet,
+            input.tutor
+            )
+    
+        await this.dogWalkingDatabase.insertPet(newPet)
+    
+        const passeioPetsId = this.idGenerator.generateId()
+    
+        const passeioPets = new PetsPasseios(
+            passeioPetsId,
+            petId,
+            walkId
         )
-
-    await this.dogWalkingDatabase.insertPet(newPet)
-
-    const passeioPetsId = this.idGenerator.generateId()
-
-    const passeioPets = new PetsPasseios(
-        passeioPetsId,
-        petId,
-        walkId
-    )
-  
-    await this.dogWalkingDatabase.insertPetsPasseios(passeioPets);
+      
+        await this.dogWalkingDatabase.insertPetsPasseios(passeioPets);
+    } else if (verifyPet){
+        const passeioPetsId = this.idGenerator.generateId()
+    
+        const passeioPets = new PetsPasseios(
+            passeioPetsId,
+            verifyPet.id,
+            walkId
+        )
+      
+        await this.dogWalkingDatabase.insertPetsPasseios(passeioPets);
+    }
 
 }
 
   } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
   }
-};
-
-  getPetId = async (nome: string, tutor: string) => {
-     try {  
-        const pet = await this.dogWalkingDatabase.getPetId(nome, tutor)
-
-        if(!pet){
-            throw new CustomError(422, "Pet não cadastrado.")
-        }
-
-        return pet
-    } catch (error: any) {
-        throw new CustomError(error.statusCode, error.message)
-    }
 };
 
   getWalks = async () => {
@@ -143,5 +142,75 @@ export default class DogWalkingBusiness {
         throw new CustomError(error.statusCode, error.message)   
     }
 };
+
+  start_walk = async (walkId: string) => {
+    try {
+        
+        if (!walkId) {
+            throw new CustomError(422, "Favor informar id do passeio.");
+        }
+        const walk = await this.dogWalkingDatabase.getWalkById(walkId)
+
+        if(walk.status === "em andamento"){
+            throw new CustomError(422, "O passeio já foi iniciado.");
+        } else if(walk.status === "finalizado"){
+            throw new CustomError(422, "Não é possível iniciar um passeio que já foi finalizado.");
+        }
+        
+        const startTime = moment().format('HH:mm:ss')
+        
+        const newWalk = await this.dogWalkingDatabase.start_walk(walkId, startTime);
+        
+        return newWalk;
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message);
+        }
+    };
+
+  finish_walk = async (walkId: string) => {
+    try {
+            
+        if (!walkId) {
+            throw new CustomError(422, "Favor informar id do passeio.");
+        }
+
+        const walk = await this.dogWalkingDatabase.getWalkById(walkId)
+
+        if(walk.status === "a iniciar"){
+            throw new CustomError(422, "Não é possível finalizar um passeio que ainda não foi iniciado.");
+        }
+
+        if(walk.status === "finalizado"){
+            throw new CustomError(422, "O passeio já foi finalizado.");
+        }
+            
+        const finishTime = moment().format('HH:mm:ss')
+        
+        const newDuration = moment(finishTime, "HH:mm:ss").diff(moment(walk.hora_inicio, "HH:mm:ss"))
+        const newDurationMin = moment.duration(newDuration).asMinutes()
+
+        const walkPets = await this.dogWalkingDatabase.getPasseioPets(walkId)
+
+        if (newDurationMin <= 30){
+        const newPrice = 25 + ((walkPets.length - 1) * 15)
+        const duration = "30"
+            
+        const newWalk = await this.dogWalkingDatabase.finish_walk(walkId, finishTime, newPrice, duration);
+            
+        return newWalk;
+        } else if (newDurationMin > 30 && newDurationMin <= 60){
+        const newPrice = 35 + ((walkPets.length - 1) * 20)
+
+        const duration = "60"
+            
+        const newWalk = await this.dogWalkingDatabase.finish_walk(walkId, finishTime, newPrice, duration);
+     
+        return newWalk; 
+        }
+
+    } catch (error: any) {
+        throw new CustomError(error.statusCode, error.message);
+        }
+    };
 
 };

@@ -1,6 +1,6 @@
 
 import { BaseDatabase } from "./BaseDatabase";
-import DogWalking from "../model/DogWalking";
+import DogWalking, { DuracaoRole } from "../model/DogWalking";
 import Pet from "../model/Pet";
 import PetsPasseios from "../model/PetsPasseios";
 
@@ -101,5 +101,40 @@ export default class DogWalkingDatabase extends BaseDatabase {
         } catch (error) {
             throw new Error("Erro ao buscar pet no banco.")
         }
+    };
+
+    start_walk = async (id: string, startTime: string) => {
+        try {
+            const result = await this.connection(this.TABLE_NAME)
+            .update({hora_inicio: startTime, status: "em andamento"})
+            .where({id})
+      
+            const [updatedWalk] = await this.connection(this.TABLE_NAME)
+            .select("*")
+            .where({id})
+      
+            return updatedWalk
+      
+          } catch (error: any) {
+            throw new Error(error.sqlMessage || error.message);
+          }
+        };
+
+    finish_walk = async (id: string, finishTime: string, newPrice: number, duration: string) => {
+        try {
+            const result = await this.connection(this.TABLE_NAME)
+            .update({status: "finalizado", preco: newPrice, duracao: duration, hora_fim: finishTime})
+            .where({id})
+            console.log("cheguei")
+          
+            const [updatedWalk] = await this.connection(this.TABLE_NAME)
+            .select("*")
+            .where({id})
+          
+            return updatedWalk
+          
+            } catch (error: any) {
+              throw new Error(error.sqlMessage || error.message);
+            }
     };
 };

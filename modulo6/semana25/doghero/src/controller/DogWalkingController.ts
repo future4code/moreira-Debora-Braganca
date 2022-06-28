@@ -29,19 +29,6 @@ export default class DogWalkingController {
         }
     };
 
-    public getPetId = async (req:Request, res:Response) => {
-        const {nome, tutor} = req.body
-        try {
-            const pet = await this.dogWalkingBusiness.getPetId(nome, tutor)
-            res.status(200).send(pet)
-        } catch (error) {
-            if(error instanceof Error){
-                return res.status(400).send(error.message)
-            }
-            res.status(500).send("Erro ao pesquisar pet.")
-        }
-    };
-
     public getWalks = async (req:Request, res:Response) => {
         try {
             const walks = await this.dogWalkingBusiness.getWalks()
@@ -50,35 +37,37 @@ export default class DogWalkingController {
             if(error instanceof Error){
                 return res.status(400).send(error.message)
             }
-            res.status(500).send("Erro ao pesquisar pet.")
+            res.status(500).send("Erro ao pesquisar passeios.")
         }
     };
 
-    // public getProductsByName = async (req:Request, res:Response) => {
-    //     const name = req.query.name as string
-    //     try {
-    //         const products = await this.productBusiness.getProductsByName(name)
+    public start_walk = async (req: Request, res: Response) => {
+        try {
+            const walkId = req.params.id
+        
+            const walk = await this.dogWalkingBusiness.start_walk(walkId);
+            res
+            .status(201)
+            .send({ message: "Passeio iniciado com sucesso.", walk });
+        
+        } catch (error: any) {
+            const { statusCode, message } = error;
+            res.status(statusCode || 400).send({ message });
+        }
+    };
 
-    //         res.status(200).send(products)
-    //     } catch (error) {
-    //         if(error instanceof Error){
-    //             return res.status(400).send(error.message)
-    //         }
-    //         res.status(500).send("Erro ao pesquisar produto.")
-    //     }
-    // };
-
-    // public getProductsByTag = async (req:Request, res:Response) => {
-    //     const tag = req.params.tag as string
-    //     try {
-    //         const products = await this.productBusiness.getProductsByTag(tag)
-
-    //         res.status(200).send(products)
-    //     } catch (error) {
-    //         if(error instanceof Error){
-    //             return res.status(400).send(error.message)
-    //         }
-    //         res.status(500).send("Erro ao pesquisar produto.")
-    //     }
-    // };
-}
+    public finish_walk = async (req: Request, res: Response) => {
+        try {
+            const walkId = req.params.id
+        
+            const walk = await this.dogWalkingBusiness.finish_walk(walkId);
+            res
+            .status(201)
+            .send({ message: "Passeio finalizado com sucesso.", walk });
+        
+        } catch (error: any) {
+            const { statusCode, message } = error;
+            res.status(statusCode || 400).send({ message });
+        }
+    };
+};

@@ -18,13 +18,13 @@ POST http://localhost:3003/walks/create
 Content-Type: application/json
 
 {
-    "data": "2022/06/28",
-    "duracao": "60",
-    "latitude": 12345678,
-    "longitude": 87654321,
-    "hora_inicio": "15:00:00",
-    "hora_fim": "16:00:00",
-    "pets": ["Nina", "Mel"],
+    "data": "2022/06/29",
+    "duracao": "30",
+    "latitude": 12346585,
+    "longitude": 87653399,
+    "hora_inicio": "18:00:00",
+    "hora_fim": "18:30:00",
+    "pets": ["Nina"],
     "tutor": "Hugo"
 }
 
@@ -41,4 +41,14 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3003/walks
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3003/walks/finish/23ea0868-1ccc-4af6-a263-760a8c534bd3
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3003/walks/start/23ea0868-1ccc-4af6-a263-760a8c534bd3
 Content-Type: application/json
