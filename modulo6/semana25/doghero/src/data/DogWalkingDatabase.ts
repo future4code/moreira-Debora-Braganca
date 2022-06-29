@@ -42,7 +42,7 @@ export default class DogWalkingDatabase extends BaseDatabase {
         }
     }
 
-    getWalks = async () => {
+    getAllWalks = async () => {
         try {
             const queryResult = await this
             .connection(this.TABLE_NAME)

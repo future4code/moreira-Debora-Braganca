@@ -30,7 +30,7 @@ export default class DogWalkingController {
 
     public getWalks = async (req:Request, res:Response) => {
         try {
-            const walks = await this.dogWalkingBusiness.getWalks()
+            const walks = await this.dogWalkingBusiness.getAllWalks()
             res.status(200).send(walks)
         } catch (error) {
             if(error instanceof Error){

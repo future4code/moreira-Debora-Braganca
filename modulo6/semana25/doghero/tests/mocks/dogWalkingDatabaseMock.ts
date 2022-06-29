@@ -13,7 +13,7 @@ export default class DogWalkingDatabaseMock {
 
     insertPetsPasseios = async(petspasseio: PetsPasseios): Promise<void> => {}
 
-    getWalks = async (): Promise <DogWalking[]> => {
+    getAllWalks = async (): Promise <DogWalking[]> => {
         const result = [dogWalkingMock1, dogWalkingMock2, dogWalkingMock3]
         return result
       };

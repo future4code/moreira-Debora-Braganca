@@ -15,7 +15,7 @@ export const dogWalkingMock1 = new DogWalking(
 
 export const dogWalkingMock2 = new DogWalking(
     "id_mockado2",
-    StatusRole.INICIAR,
+    StatusRole.ANDAMENTO,
     "2022/06/28",
     55,
     30,
@@ -27,7 +27,7 @@ export const dogWalkingMock2 = new DogWalking(
 
 export const dogWalkingMock3 = new DogWalking(
     "id_mockado3",
-    StatusRole.INICIAR,
+    StatusRole.FINALIZADO,
     "2022/06/28",
     55,
     30,

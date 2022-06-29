@@ -116,26 +116,26 @@ export default class DogWalkingBusiness {
   }
 };
 
-  getWalks = async () => {
+  getAllWalks = async () => {
     try {
 
-        const walks = await this.dogWalkingDatabase.getWalks()
+        const walks = await this.dogWalkingDatabase.getAllWalks()
 
         const fullWalks = []
 
         for (let walk of walks){
             const pets = await this.dogWalkingDatabase.getPasseioPets(walk.id)
 
-            const passeioPets = []
+            const walkPets = []
 
             for(let pet of pets){
                 const petName = await this.dogWalkingDatabase.getPetById(pet.pet_id)
-                passeioPets.push(petName.nome)
+                walkPets.push(petName.nome)
             }
 
             const fullWalk = {
                 ...walk,
-                passeioPets
+                walkPets
             }
 
             fullWalks.push(fullWalk)
@@ -151,7 +151,17 @@ export default class DogWalkingBusiness {
 
   getWalkById = async (walkId: string) => {
     try {
+
+        if (!walkId) {
+            throw new CustomError(422, "Favor informar id do passeio.");
+        }
+
         const walk = await this.dogWalkingDatabase.getWalkById(walkId)
+
+        if (!walk) {
+            throw new CustomError(422, "Passeio não encontrado.");
+        }
+
         const pets = await this.dogWalkingDatabase.getPasseioPets(walkId)
         const walkPets = []
 
@@ -178,6 +188,10 @@ export default class DogWalkingBusiness {
             throw new CustomError(422, "Favor informar id do passeio.");
         }
         const walk = await this.dogWalkingDatabase.getWalkById(walkId)
+
+        if (!walk) {
+            throw new CustomError(422, "Passeio não encontrado.");
+        }
 
         if(walk.status === "em andamento"){
             throw new CustomError(422, "O passeio já foi iniciado.");
@@ -214,7 +228,6 @@ export default class DogWalkingBusiness {
         
         const newDuration = moment(finishTime, "HH:mm:ss").diff(moment(walk.hora_inicio, "HH:mm:ss"))
         const newDurationMin = Math.round(moment.duration(newDuration).asMinutes())
-        console.log(newDurationMin)
 
         const walkPets = await this.dogWalkingDatabase.getPasseioPets(walkId)
 
