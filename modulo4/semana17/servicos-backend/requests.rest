@@ -1,0 +1,18 @@
+GET  http://localhost:3003/users
+content-type: application/json
+
+{
+    "zipcode": "20541155"
+}
+
+###
+
+POST  http://localhost:3003
+content-type: application/json
+Authorization: tayanne-novais-gebru
+
+{
+    "name": "kjdfbUWBF",
+    "artist": "Linn da Quebrada",
+    "url": "https://www.youtube.com/watch?v=y5rY2N1XuLI"
+}
