@@ -3,13 +3,16 @@ import { BaseDatabase } from "./BaseDatabase";
 import DogWalking from "../model/DogWalking";
 import Pet from "../model/Pet";
 import PetsPasseios from "../model/PetsPasseios";
+import { DogWalkingResult } from "../types/DogWalkingResult";
+import { PetResult } from "../types/PetResult";
+import { WalkPetsResult } from "../types/WalkPetsResult";
 
 export default class DogWalkingDatabase extends BaseDatabase {
     protected TABLE_NAME = "DogWalking"
     protected TABLE_PETS = "DogWalking_Pets"
     protected TABLE_PETS_PASSEIOS = "DogWalking_Pets_Passeios"
 
-    insert = async(walk: DogWalking) => {
+    insert = async(walk: DogWalking): Promise<void> => {
         try {
             await this
             .connection(this.TABLE_NAME)
@@ -18,9 +21,9 @@ export default class DogWalkingDatabase extends BaseDatabase {
         } catch (error) {
             throw new Error("Erro do banco.")
         }
-    }
+    };
 
-    insertPet = async(pet: Pet) => {
+    insertPet = async(pet: Pet): Promise<void> => {
         try {
             await this
             .connection(this.TABLE_PETS)
@@ -29,9 +32,9 @@ export default class DogWalkingDatabase extends BaseDatabase {
         } catch (error) {
             throw new Error("Erro do banco.")
         }
-    }
+    };
 
-    insertPetsPasseios = async(petspasseio: PetsPasseios) => {
+    insertPetsPasseios = async(petspasseio: PetsPasseios): Promise<void> => {
         try {
             await this
             .connection(this.TABLE_PETS_PASSEIOS)
@@ -40,9 +43,9 @@ export default class DogWalkingDatabase extends BaseDatabase {
         } catch (error) {
             throw new Error("Erro do banco.")
         }
-    }
+    };
 
-    getAllWalks = async () => {
+    getAllWalks = async (): Promise<DogWalkingResult[]> => {
         try {
             const queryResult = await this
             .connection(this.TABLE_NAME)
@@ -52,9 +55,9 @@ export default class DogWalkingDatabase extends BaseDatabase {
         } catch (error) {
             throw new Error("Erro ao buscar passeios no banco.")
         }
-    }
+    };
 
-    getWalkById = async(id: string) => {
+    getWalkById = async(id: string): Promise<DogWalkingResult> => {
         try {
             const queryResult = await this
             .connection(this.TABLE_NAME)
@@ -66,7 +69,7 @@ export default class DogWalkingDatabase extends BaseDatabase {
         }
     };
 
-    getPasseioPets = async(id: string) => {
+    getPasseioPets = async(id: string): Promise<WalkPetsResult[]> => {
         try {
             const queryResult = await this
             .connection(this.TABLE_PETS_PASSEIOS)
@@ -78,7 +81,7 @@ export default class DogWalkingDatabase extends BaseDatabase {
         }
     };
 
-    getPetById = async (id: string) => {
+    getPetById = async (id: string): Promise<PetResult> => {
         try {
             const queryResult = await this
             .connection(this.TABLE_PETS)
@@ -90,7 +93,7 @@ export default class DogWalkingDatabase extends BaseDatabase {
         }
     };
 
-    getPetId = async (nome: string, tutor: string) => {
+    getPetId = async (nome: string, tutor: string): Promise<PetResult> => {
         try {
             const queryResult = await this
             .connection(this.TABLE_PETS)
@@ -103,7 +106,7 @@ export default class DogWalkingDatabase extends BaseDatabase {
         }
     };
 
-    start_walk = async (id: string, startTime: string) => {
+    start_walk = async (id: string, startTime: string): Promise<DogWalkingResult> => {
         try {
             const result = await this.connection(this.TABLE_NAME)
             .update({hora_inicio: startTime, status: "em andamento"})
@@ -118,9 +121,9 @@ export default class DogWalkingDatabase extends BaseDatabase {
           } catch (error: any) {
             throw new Error(error.sqlMessage || error.message);
           }
-        };
+    };
 
-    finish_walk = async (id: string, finishTime: string, newPrice: number, duration: string) => {
+    finish_walk = async (id: string, finishTime: string, newPrice: number, duration: string): Promise<DogWalkingResult> => {
         try {
             const result = await this.connection(this.TABLE_NAME)
             .update({status: "finalizado", preco: newPrice, duracao: duration, hora_fim: finishTime})

@@ -9,6 +9,5 @@ export type DogWalkingResult = {
     latitude: number,
     longitude: number,
     hora_inicio: string,
-    hora_fim: string,
-    walkPets: string[]
+    hora_fim: string
 }
