@@ -1,0 +1,15 @@
+import { app } from './controller/app';
+import UserController from './controller/UserController';
+import PostController from './controller/PostController'
+
+const userController = new UserController()
+const postController = new PostController()
+
+app.post("/users/signup", userController.signUp)
+app.post("/users/login", userController.login)
+app.post("/users/follow", userController.follow)
+app.post("/users/unfollow", userController.unfollow)
+
+app.get("/posts/feed", postController.getFeed)
+app.get("/posts/:id", postController.getPostById)
+app.post("/posts", postController.createPost)
