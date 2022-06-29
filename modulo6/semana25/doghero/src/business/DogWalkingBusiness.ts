@@ -18,15 +18,25 @@ export default class DogWalkingBusiness {
   createWalk = async (input: DogWalkingInputDTO) => {
     try {
          
-    const {data, duracao, latitude, longitude, hora_inicio, hora_fim, pets, tutor} = input
-    if(!data || !duracao || !hora_inicio || !hora_fim || pets.length<1 || !tutor){
+    const {data, latitude, longitude, hora_inicio, hora_fim, pets, tutor} = input
+    if(!data || !hora_inicio || !hora_fim || pets.length<1 || !tutor){
     throw new CustomError(422, "Favor preencher todos os campos.")
     }
 
     const walkId = this.idGenerator.generateId()
     const status = DogWalking.stringToStatusRole('a iniciar')
+    const duracao = moment(hora_fim, "HH:mm:ss").diff(moment(hora_inicio, "HH:mm:ss"))
+    const duracaoMin = Math.round(moment.duration(duracao).asMinutes())
 
-    if (duracao === '30'){
+    if(duracaoMin < 0){
+        throw new CustomError(422, "O horário de fim não pode ser menor que o horário do início.")    
+    }
+
+    if(duracaoMin < 30 || duracaoMin > 60){
+        throw new CustomError(422, "Favor escolher horários com duração de 30 ou 60 minutos.")
+    }
+
+    if (duracaoMin <= 30){
         const preco = 25 + ((input.pets.length - 1) * 15)
 
         const newWalk = new DogWalking (
@@ -34,19 +44,17 @@ export default class DogWalkingBusiness {
             status,
             data,
             preco,
-            DogWalking.stringToDuracaoRole(duracao),
+            duracaoMin,
             latitude,
             longitude,
             hora_inicio,
             hora_fim
           )
-
-          console.log(newWalk)
       
           await this.dogWalkingDatabase.insert(newWalk)
     }
 
-    if (duracao === '60'){
+    if (duracaoMin > 30 && duracaoMin <=60){
         const preco = 35 + ((input.pets.length - 1) * 20)
 
         const newWalk = new DogWalking (
@@ -54,7 +62,7 @@ export default class DogWalkingBusiness {
             status,
             data,
             preco,
-            DogWalking.stringToDuracaoRole(duracao),
+            duracaoMin,
             latitude,
             longitude,
             hora_inicio,
@@ -113,8 +121,6 @@ export default class DogWalkingBusiness {
 
         const walks = await this.dogWalkingDatabase.getWalks()
 
-        console.log(walks)
-
         const fullWalks = []
 
         for (let walk of walks){
@@ -143,6 +149,28 @@ export default class DogWalkingBusiness {
     }
 };
 
+  getWalkById = async (walkId: string) => {
+    try {
+        const walk = await this.dogWalkingDatabase.getWalkById(walkId)
+        const pets = await this.dogWalkingDatabase.getPasseioPets(walkId)
+        const walkPets = []
+
+        for(let pet of pets){
+            const petName = await this.dogWalkingDatabase.getPetById(pet.pet_id)
+            walkPets.push(petName.nome)
+        }
+        const fullWalk = {
+            ...walk,
+            walkPets
+        }
+
+        return fullWalk
+
+    } catch (error: any) {
+        throw new CustomError(error.statusCode, error.message)  
+    }
+  };
+
   start_walk = async (walkId: string) => {
     try {
         
@@ -165,7 +193,7 @@ export default class DogWalkingBusiness {
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message);
         }
-    };
+  };
 
   finish_walk = async (walkId: string) => {
     try {
@@ -178,16 +206,15 @@ export default class DogWalkingBusiness {
 
         if(walk.status === "a iniciar"){
             throw new CustomError(422, "Não é possível finalizar um passeio que ainda não foi iniciado.");
-        }
-
-        if(walk.status === "finalizado"){
+        } else if(walk.status === "finalizado"){
             throw new CustomError(422, "O passeio já foi finalizado.");
         }
             
         const finishTime = moment().format('HH:mm:ss')
         
         const newDuration = moment(finishTime, "HH:mm:ss").diff(moment(walk.hora_inicio, "HH:mm:ss"))
-        const newDurationMin = moment.duration(newDuration).asMinutes()
+        const newDurationMin = Math.round(moment.duration(newDuration).asMinutes())
+        console.log(newDurationMin)
 
         const walkPets = await this.dogWalkingDatabase.getPasseioPets(walkId)
 
@@ -211,6 +238,6 @@ export default class DogWalkingBusiness {
     } catch (error: any) {
         throw new CustomError(error.statusCode, error.message);
         }
-    };
+  };
 
 };

@@ -4,7 +4,7 @@ export default class DogWalking {
         private status: StatusRole,
         private data: string,
         private preco: number,
-        private duracao: DuracaoRole,
+        private duracao: number,
         private latitude: number,
         private longitude: number,
         private hora_inicio: string,
@@ -39,18 +39,6 @@ export default class DogWalking {
         return this.hora_fim
     }
 
-
-    static stringToDuracaoRole(input: string): DuracaoRole{
-        switch (input) {
-            case '30':
-              return DuracaoRole.TRINTA;
-            case '60':
-              return DuracaoRole.SESSENTA;
-            default:
-              throw new Error("Tempo de duração inválido");
-          }
-    }
-
     static stringToStatusRole(input: string): StatusRole{
         switch (input) {
             case 'a iniciar':
@@ -64,11 +52,6 @@ export default class DogWalking {
           }
     }
 
-}
-
-export enum DuracaoRole{
-    TRINTA = '30',
-    SESSENTA = '60'
 }
 
 export enum StatusRole{

@@ -10,7 +10,6 @@ export default class DogWalkingController {
 
         const input: DogWalkingInputDTO = {
             data,
-            duracao,
             latitude,
             longitude,
             hora_inicio,
@@ -38,6 +37,19 @@ export default class DogWalkingController {
                 return res.status(400).send(error.message)
             }
             res.status(500).send("Erro ao pesquisar passeios.")
+        }
+    };
+
+    public getWalkById = async (req:Request, res:Response) => {
+        try {
+            const walkId = req.params.id
+            const walk = await this.dogWalkingBusiness.getWalkById(walkId)
+            res.status(200).send(walk)
+        } catch (error) {
+            if(error instanceof Error){
+                return res.status(400).send(error.message)
+            }
+            res.status(500).send("Erro ao pesquisar passeio.")
         }
     };
 

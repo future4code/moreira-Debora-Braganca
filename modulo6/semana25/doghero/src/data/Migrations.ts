@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS DogWalking(
   status ENUM ('a iniciar', 'em andamento', 'finalizado'),
   data DATE NOT NULL,
   preco INT NOT NULL,
-  duracao ENUM ('30', '60'),
+  duracao INT NOT NULL,
   latitude INT NOT NULL,
   longitude INT NOT NULL,
   hora_inicio TIME NOT NULL,

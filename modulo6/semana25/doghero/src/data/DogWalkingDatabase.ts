@@ -1,6 +1,6 @@
 
 import { BaseDatabase } from "./BaseDatabase";
-import DogWalking, { DuracaoRole } from "../model/DogWalking";
+import DogWalking from "../model/DogWalking";
 import Pet from "../model/Pet";
 import PetsPasseios from "../model/PetsPasseios";
 
@@ -125,7 +125,6 @@ export default class DogWalkingDatabase extends BaseDatabase {
             const result = await this.connection(this.TABLE_NAME)
             .update({status: "finalizado", preco: newPrice, duracao: duration, hora_fim: finishTime})
             .where({id})
-            console.log("cheguei")
           
             const [updatedWalk] = await this.connection(this.TABLE_NAME)
             .select("*")
