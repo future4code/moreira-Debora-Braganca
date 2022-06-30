@@ -26,17 +26,17 @@ export default class DogWalkingBusiness {
     const walkId = this.idGenerator.generateId()
     const status = DogWalking.stringToStatusRole('a iniciar')
     const duracao = moment(hora_fim, "HH:mm:ss").diff(moment(hora_inicio, "HH:mm:ss"))
-    const duracaoMin = Math.round(moment.duration(duracao).asMinutes())
+    const duracaoMinutos = Math.round(moment.duration(duracao).asMinutes())
 
-    if(duracaoMin < 0){
+    if(duracaoMinutos < 0){
         throw new CustomError(422, "O horário de fim não pode ser menor que o horário do início.")    
     }
 
-    if(duracaoMin < 30 || duracaoMin > 60){
+    if(duracaoMinutos < 30 || duracaoMinutos > 60){
         throw new CustomError(422, "Favor escolher horários com duração de 30 ou 60 minutos.")
     }
 
-    if (duracaoMin <= 30){
+    if (duracaoMinutos <= 30){
         const preco = 25 + ((input.pets.length - 1) * 15)
 
         const newWalk = new DogWalking (
@@ -44,7 +44,7 @@ export default class DogWalkingBusiness {
             status,
             data,
             preco,
-            duracaoMin,
+            duracaoMinutos,
             latitude,
             longitude,
             hora_inicio,
@@ -54,7 +54,7 @@ export default class DogWalkingBusiness {
           await this.dogWalkingDatabase.insert(newWalk)
     }
 
-    if (duracaoMin > 30 && duracaoMin <=60){
+    if (duracaoMinutos > 30 && duracaoMinutos <=60){
         const preco = 35 + ((input.pets.length - 1) * 20)
 
         const newWalk = new DogWalking (
@@ -62,7 +62,7 @@ export default class DogWalkingBusiness {
             status,
             data,
             preco,
-            duracaoMin,
+            duracaoMinutos,
             latitude,
             longitude,
             hora_inicio,

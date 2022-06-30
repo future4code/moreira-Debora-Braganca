@@ -6,7 +6,7 @@ export default class DogWalkingController {
     constructor(private dogWalkingBusiness: DogWalkingBusiness){}
 
     public createDogWalking = async(req: Request, res:Response) => {
-        const {data, duracao, latitude, longitude, hora_inicio, hora_fim, pets, tutor} = req.body
+        const {data, latitude, longitude, hora_inicio, hora_fim, pets, tutor} = req.body
 
         const input: DogWalkingInputDTO = {
             data,
@@ -28,7 +28,7 @@ export default class DogWalkingController {
         }
     };
 
-    public getWalks = async (req:Request, res:Response) => {
+    public getAllWalks = async (req:Request, res:Response) => {
         try {
             const walks = await this.dogWalkingBusiness.getAllWalks()
             res.status(200).send(walks)
