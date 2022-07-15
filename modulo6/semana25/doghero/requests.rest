@@ -1,0 +1,48 @@
+POST http://localhost:3003/walks/create
+Content-Type: application/json
+
+{
+    "data": "2022/06/28",
+    "latitude": 25624735,
+    "longitude": 25673587,
+    "hora_inicio": "17:00:00",
+    "hora_fim": "17:30:00",
+    "pets": ["Olivia", "Thor"],
+    "tutor": "Déborah"
+}
+
+###
+
+POST http://localhost:3003/walks/create
+Content-Type: application/json
+
+{
+    "data": "2022/06/29",
+    "latitude": 12346585,
+    "longitude": 87653399,
+    "hora_inicio": "18:00:00",
+    "hora_fim": "18:30:00",
+    "pets": ["Nina"],
+    "tutor": "Hugo"
+}
+
+
+###
+
+GET http://localhost:3003/walks
+Content-Type: application/json
+
+###
+
+GET http://localhost:3003/walks/97b2ecb7-781a-4376-a0a8-44b49bf07237
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3003/walks/start/564db81d-1faa-418e-9b2a-f8a0753fe477
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3003/walks/finish/564db81d-1faa-418e-9b2a-f8a0753fe477
+Content-Type: application/json
